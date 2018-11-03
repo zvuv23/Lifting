@@ -8,6 +8,53 @@
 
 import Foundation
 
+class ExerciseVars {
+    
+    var categoriesMap : [Int: NameIdCodable]
+    var musclesMap : [Int: NameIdCodable]
+    var equipmentMap : [Int: NameIdCodable]
+    
+    static let instance = ExerciseVars()
+    
+    func getExercises(completion: ((HTTPCalls.Result<[ExerciseInfo]>) -> Void)?) {
+        ExerciseBuilder.getExercises(completion: completion)
+    }
+
+    private init() {
+        categoriesMap = [Int: NameIdCodable]()
+        musclesMap = [Int: NameIdCodable]()
+        equipmentMap = [Int: NameIdCodable]()
+        
+        ExerciseBuilder.getHttpWgerJSON(url: URL(string: "https://wger.de/api/v2/exercisecategory/")!,completion: getCategories)
+        ExerciseBuilder.getHttpWgerJSON(url: URL(string: "https://wger.de/api/v2/equipment/")!, completion: getEquipment)
+        ExerciseBuilder.getHttpWgerJSON(url: URL(string: "https://wger.de/api/v2/equipment/")!, completion: getEquipment)
+        ExerciseBuilder.getHttpWgerJSON(url: URL(string: "https://wger.de/api/v2/muscle/")!, completion: getMuscles)
+    }
+    
+    private func getNameIdMap (result: HTTPCalls.Result<[NameIdCodable]>) ->[Int: NameIdCodable]{
+        switch result {
+        case .success(let array):
+            return array.reduce(into: [Int: NameIdCodable]()) {
+                $0[$1.id] = $1
+            }
+        case .failure(let error):
+            fatalError("error: \(error.localizedDescription)")
+        }
+    }
+
+    private func getCategories (result: HTTPCalls.Result<[NameIdCodable]>) ->Void{
+        categoriesMap = getNameIdMap(result: result);
+    }
+    
+    private func getMuscles (result: HTTPCalls.Result<[NameIdCodable]>) ->Void{
+        musclesMap = getNameIdMap(result: result);
+    }
+    
+    private func getEquipment (result: HTTPCalls.Result<[NameIdCodable]>) ->Void{
+        equipmentMap = getNameIdMap(result: result);
+    }
+}
+
 struct WgerJSON<T : Codable> : Codable {
     let results : [T]
     let next : String?
@@ -20,12 +67,12 @@ struct WgerJSON<T : Codable> : Codable {
 
 struct ExerciseInfo: Codable {
     let name: String
-    let category: Int
+    let category: NameIdCodable
     let id: Int
-    let muscles : [Int]
-    let secondaryMuscles : [Int]
     let description : String
-    let equipment : [Int]
+    var muscles : [NameIdCodable]
+    var secondaryMuscles : [NameIdCodable]
+    var equipment : [NameIdCodable]
     
 
     //In order to solve camel case problem, we can declare Coding Keys enum and tell to use snake case for Swift constant and camel case for JSON.
@@ -39,9 +86,9 @@ struct ExerciseInfo: Codable {
         case equipment
     }
     
-    func getCategoryName() -> String{
-        return ExerciseBuilder.builder.getMuscleCategory(number: category).name
-    }
+//    func getCategoryName() -> String{
+//        return ExerciseBuilder.builder.getMuscleCategory(number: category).name
+//    }
     
 //    func encode(to encoder: Encoder) throws {
 //        var container = encoder.container(keyedBy: CodingKeys.self)
@@ -49,15 +96,33 @@ struct ExerciseInfo: Codable {
 //        //try container.encode(muscle, forKey: .category)
 //    }
 
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        name = try container.decode(String.self, forKey: .name)
-//        id = try container.decode(Int.self, forKey: .id)
-//        category = try container.decode(Int.self, forKey: .category)
-////        category = ExerciseBuilder.builder.getMuscleCategory(number: categoryID)
-//        muscles = [NameIdCodable]()
-//        secondaryMuscles = [NameIdCodable]()
-//    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        id = try container.decode(Int.self, forKey: .id)
+        description = try container.decode(String.self, forKey: .description)
+
+        let categoryId = try container.decode(Int.self, forKey: .category)
+        category = ExerciseVars.instance.categoriesMap[categoryId]!
+        muscles = [NameIdCodable]()
+        secondaryMuscles = [NameIdCodable]()
+        equipment = [NameIdCodable]()
+
+        let muscleIds = try container.decode([Int].self, forKey: .muscles)
+        muscleIds.forEach { id in
+            self.muscles.append(ExerciseVars.instance.musclesMap[id]!)
+        }
+        
+        let secMuscleIds = try container.decode([Int].self, forKey: .secondaryMuscles)
+        secMuscleIds.forEach { id in
+            self.secondaryMuscles.append(ExerciseVars.instance.musclesMap[id]!)
+        }
+        
+        let equipmentIds = try container.decode([Int].self, forKey: .equipment)
+        equipmentIds.forEach { id in
+            self.equipment.append(ExerciseVars.instance.equipmentMap[id]!)
+        }
+    }
 }
 
 struct NameIdCodable: Codable {
@@ -69,3 +134,5 @@ struct NameIdCodable: Codable {
         case id
     }
 }
+
+

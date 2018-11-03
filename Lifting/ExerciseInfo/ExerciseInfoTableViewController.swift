@@ -19,7 +19,7 @@ class ExerciseInfoTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ExerciseBuilder.builder.getExercises() {(result) in
+        ExerciseVars.instance.getExercises() {(result) in
             switch result {
             case .success(let exerciseList):
                 self.exercises.append(contentsOf: exerciseList)
@@ -92,7 +92,7 @@ class ExerciseInfoTableViewController: UITableViewController {
             exercise = exercises[indexPath.row]
         }
         cell.textLabel!.text = exercise.name
-        cell.detailTextLabel!.text = exercise.getCategoryName()
+        cell.detailTextLabel!.text = exercise.category.name
         return cell
     }
     
