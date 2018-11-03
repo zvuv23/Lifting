@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		E26B8957218465A30098A7BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B8956218465A30098A7BF /* AppDelegate.swift */; };
-		E26B8959218465A30098A7BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B8958218465A30098A7BF /* ViewController.swift */; };
 		E26B895C218465A30098A7BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26B895A218465A30098A7BF /* Main.storyboard */; };
 		E26B895F218465A30098A7BF /* Lifting.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E26B895D218465A30098A7BF /* Lifting.xcdatamodeld */; };
 		E26B8961218465A30098A7BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E26B8960218465A30098A7BF /* Assets.xcassets */; };
 		E26B8964218465A30098A7BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26B8962218465A30098A7BF /* LaunchScreen.storyboard */; };
 		E26B896F218465A30098A7BF /* LiftingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B896E218465A30098A7BF /* LiftingTests.swift */; };
 		E26B897A218465A30098A7BF /* LiftingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B8979218465A30098A7BF /* LiftingUITests.swift */; };
+		E26B8988218468300098A7BF /* ExerciseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B8987218468300098A7BF /* ExerciseInfo.swift */; };
+		E26B898B218469C30098A7BF /* ExerciseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B898A218469C30098A7BF /* ExerciseBuilder.swift */; };
+		E26B898D21846A380098A7BF /* ExerciseInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B898C21846A380098A7BF /* ExerciseInfoTableViewController.swift */; };
+		E26B898F2185E2840098A7BF /* HTTPCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B898E2185E2840098A7BF /* HTTPCalls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,6 @@
 /* Begin PBXFileReference section */
 		E26B8953218465A30098A7BF /* Lifting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lifting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26B8956218465A30098A7BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E26B8958218465A30098A7BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E26B895B218465A30098A7BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E26B895E218465A30098A7BF /* Lifting.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lifting.xcdatamodel; sourceTree = "<group>"; };
 		E26B8960218465A30098A7BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,10 @@
 		E26B8975218465A30098A7BF /* LiftingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiftingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26B8979218465A30098A7BF /* LiftingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiftingUITests.swift; sourceTree = "<group>"; };
 		E26B897B218465A30098A7BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E26B8987218468300098A7BF /* ExerciseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInfo.swift; sourceTree = "<group>"; };
+		E26B898A218469C30098A7BF /* ExerciseBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseBuilder.swift; sourceTree = "<group>"; };
+		E26B898C21846A380098A7BF /* ExerciseInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInfoTableViewController.swift; sourceTree = "<group>"; };
+		E26B898E2185E2840098A7BF /* HTTPCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPCalls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +105,8 @@
 		E26B8955218465A30098A7BF /* Lifting */ = {
 			isa = PBXGroup;
 			children = (
+				E26B8989218469990098A7BF /* ExerciseInfo */,
 				E26B8956218465A30098A7BF /* AppDelegate.swift */,
-				E26B8958218465A30098A7BF /* ViewController.swift */,
 				E26B895A218465A30098A7BF /* Main.storyboard */,
 				E26B8960218465A30098A7BF /* Assets.xcassets */,
 				E26B8962218465A30098A7BF /* LaunchScreen.storyboard */,
@@ -126,6 +132,17 @@
 				E26B897B218465A30098A7BF /* Info.plist */,
 			);
 			path = LiftingUITests;
+			sourceTree = "<group>";
+		};
+		E26B8989218469990098A7BF /* ExerciseInfo */ = {
+			isa = PBXGroup;
+			children = (
+				E26B8987218468300098A7BF /* ExerciseInfo.swift */,
+				E26B898A218469C30098A7BF /* ExerciseBuilder.swift */,
+				E26B898C21846A380098A7BF /* ExerciseInfoTableViewController.swift */,
+				E26B898E2185E2840098A7BF /* HTTPCalls.swift */,
+			);
+			path = ExerciseInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,8 +280,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E26B895F218465A30098A7BF /* Lifting.xcdatamodeld in Sources */,
-				E26B8959218465A30098A7BF /* ViewController.swift in Sources */,
+				E26B8988218468300098A7BF /* ExerciseInfo.swift in Sources */,
+				E26B898D21846A380098A7BF /* ExerciseInfoTableViewController.swift in Sources */,
 				E26B8957218465A30098A7BF /* AppDelegate.swift in Sources */,
+				E26B898B218469C30098A7BF /* ExerciseBuilder.swift in Sources */,
+				E26B898F2185E2840098A7BF /* HTTPCalls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
