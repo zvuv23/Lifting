@@ -11,13 +11,6 @@ import os.log
 
 class ExerciseBuilder{
     
-//    var categories : [Int: NameIdCodable]?
-//    static let builder = ExerciseBuilder()
-    
-//    private init() {
-//        getHttpWgerJSON(url: URL(string: "https://wger.de/api/v2/exercisecategory/")!,completion: getCategories)
-//    }
-    
     static func getHttpWgerJSON<T: Codable>(url: URL, completion: ((HTTPCalls.Result<[T]>) -> Void)?){
         HTTPCalls.makeGetCall(url: url, decodableType: WgerJSON<T>.self, completionHandler: { (result) in
             switch result {
@@ -34,22 +27,6 @@ class ExerciseBuilder{
         })
     }
     
-    //TODO change this to return the array and make the exercise info model to call 
-//    private func getNameIdMap (result: HTTPCalls.Result<[NameIdCodable]>) ->[Int: NameIdCodable]{
-//        switch result {
-//        case .success(let array):
-//            return array.reduce(into: [Int: NameIdCodable]()) {
-//                $0[$1.id] = $1
-//            }
-//        case .failure(let error):
-//            fatalError("error: \(error.localizedDescription)")
-//        }
-//    }
-//
-//    private func getCategories (result: HTTPCalls.Result<[NameIdCodable]>) ->Void{
-//        categories = getNameIdMap(result: result);
-//    }
-    
     static func getExercises(completion: ((HTTPCalls.Result<[ExerciseInfo]>) -> Void)?) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -64,11 +41,5 @@ class ExerciseBuilder{
         
         getHttpWgerJSON(url: url, completion: completion)
     }
-    
-//    func getMuscleCategory(number: Int) -> NameIdCodable {
-//        return categories![number]!
-//    }
-    
-    
-    
+  
 }

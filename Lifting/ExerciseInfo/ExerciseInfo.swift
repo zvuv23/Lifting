@@ -10,16 +10,19 @@ import Foundation
 
 class ExerciseVars {
     
+    //MARK: properties
     var categoriesMap : [Int: NameIdCodable]
     var musclesMap : [Int: NameIdCodable]
     var equipmentMap : [Int: NameIdCodable]
     
     static let instance = ExerciseVars()
     
+    //MARK: public functions
     func getExercises(completion: ((HTTPCalls.Result<[ExerciseInfo]>) -> Void)?) {
         ExerciseBuilder.getExercises(completion: completion)
     }
 
+    //MARK: private functions
     private init() {
         categoriesMap = [Int: NameIdCodable]()
         musclesMap = [Int: NameIdCodable]()
@@ -55,6 +58,7 @@ class ExerciseVars {
     }
 }
 
+//MARK: codable structs
 struct WgerJSON<T : Codable> : Codable {
     let results : [T]
     let next : String?
@@ -85,16 +89,6 @@ struct ExerciseInfo: Codable {
         case description
         case equipment
     }
-    
-//    func getCategoryName() -> String{
-//        return ExerciseBuilder.builder.getMuscleCategory(number: category).name
-//    }
-    
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(name, forKey: .name)
-//        //try container.encode(muscle, forKey: .category)
-//    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
